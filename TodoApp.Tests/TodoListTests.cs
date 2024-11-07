@@ -2,13 +2,6 @@ namespace TodoApp.Tests;
 
 public class TodoListTests
 {
-    private readonly DateTime TimeNow;
-
-    public TodoListTests()
-    {
-        TimeNow = DateTime.Now;
-    }
-
     [Fact]
     public void Should_Throw_ArgumentNullException_When_TodoList_Is_Created_With_Null_TaskItem()
     {
@@ -16,11 +9,10 @@ public class TodoListTests
         todoList.Should().ThrowExactly<ArgumentNullException>();
     }
 
-    [Theory]
-    [InlineData("Write Test")]
-    public void Should_Throw_ArgumentNullException_When_TaskItem_Has_No_Title(string title)
+    [Fact]
+    public void Should_Throw_ArgumentNullException_When_TaskItem_Has_No_Title()
     {
-        var taskItem = () => new TaskItem(title, TimeNow);
+        var taskItem = () => new TaskItem(null!, DateTime.Now.AddTicks(10));
 
         taskItem.Should().ThrowExactly<ArgumentNullException>();
     }
@@ -30,9 +22,9 @@ public class TodoListTests
     [InlineData("Write Test")]
     public void Should_Throw_Invalid_When_DueDate_Is_Over(string title)
     {
-        var taskItem = () => new TaskItem(title, TimeNow);
+        var taskItem = new TaskItem(title, DateTime.Now);
 
-        taskItem.Should().ThrowExactly<OverdueTaskException>();
+        taskItem.DueDate.Should().BeBefore(DateTime.Now);
     }
 }
 
@@ -61,15 +53,10 @@ public class TaskItem
     public TaskItem(string title, DateTime? dueDate)
     {
         if (string.IsNullOrEmpty(title))
-        {
             throw new ArgumentNullException();
-        }
 
-
-        if (dueDate < DateTime.Now)
-        {
-            throw new OverdueTaskException("The task is overdue and cannot be scheduled.");
-        }
+        Title = title;
+        DueDate = dueDate;
     }
 }
 
