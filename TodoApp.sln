@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Tests", "TodoApp.Tests\TodoApp.Tests.csproj", "{1F0ADA5C-B9A3-4394-96B3-AA6B6C09C148}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp", "TodoApp\TodoApp.csproj", "{D6AD2319-3D69-4CAA-A9E5-0940249F1138}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1F0ADA5C-B9A3-4394-96B3-AA6B6C09C148}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F0ADA5C-B9A3-4394-96B3-AA6B6C09C148}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F0ADA5C-B9A3-4394-96B3-AA6B6C09C148}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F0ADA5C-B9A3-4394-96B3-AA6B6C09C148}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6AD2319-3D69-4CAA-A9E5-0940249F1138}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6AD2319-3D69-4CAA-A9E5-0940249F1138}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6AD2319-3D69-4CAA-A9E5-0940249F1138}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6AD2319-3D69-4CAA-A9E5-0940249F1138}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
