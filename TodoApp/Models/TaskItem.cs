@@ -1,5 +1,3 @@
-using TodoApp.Exceptions;
-
 namespace TodoApp.Models;
 
 public class TaskItem
@@ -10,6 +8,11 @@ public class TaskItem
     public DateTime? DueDate { get; set; }
     public int Priority { get; set; }
     public bool IsCompleted { get; set; }
+
+
+    public TaskItem()
+    {
+    }
 
     public TaskItem(string title, DateTime? dueDate)
     {
@@ -22,5 +25,21 @@ public class TaskItem
 
         Title = title;
         DueDate = dueDate;
+    }
+
+    public void MarkCompleted()
+    {
+        if (IsCompleted)
+            throw new InvalidOperationException("Task is already marked as complete");
+
+        IsCompleted = true;
+    }
+
+    public void MarkUnCompleted()
+    {
+        if (!IsCompleted)
+            throw new InvalidOperationException("Task is already marked as Uncompleted");
+
+        IsCompleted = false;
     }
 }
