@@ -1,6 +1,6 @@
 namespace TodoApp.Models;
 
-public class TaskItem
+public class TaskItem : BaseClass
 {
     public Guid TaskId { get; set; }
     public string Title { get; set; }
