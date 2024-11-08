@@ -22,4 +22,8 @@
         <Using Include="Xunit" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\TodoApp\TodoApp.csproj" />
+    </ItemGroup>
+
 </Project>
