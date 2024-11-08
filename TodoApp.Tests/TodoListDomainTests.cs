@@ -1,3 +1,6 @@
+using System.Globalization;
+using Castle.Components.DictionaryAdapter.Xml;
+
 namespace TodoApp.Tests;
 
 public class TodoListDomainTests
@@ -12,7 +15,7 @@ public class TodoListDomainTests
     [Fact]
     public void Should_Throw_ArgumentNullException_When_TaskItem_Has_No_Title()
     {
-        var taskItem = () => new TaskItem(title: null!, DateTime.Now.AddSeconds(10));
+        var taskItem = () => new TaskItem(title: null!, null);
 
         taskItem.Should().ThrowExactly<ArgumentNullException>();
     }
@@ -23,5 +26,28 @@ public class TodoListDomainTests
     {
         var taskItem = new TaskItem(title, DateTime.Now.AddDays(1));
         taskItem.DueDate.Should().NotBeBefore(DateTime.Now);
+    }
+
+    [Fact]
+    public void Should_Throw_IsCompletedException_When_Task_Is_Completed_Once()
+    {
+        var taskItem = new TaskItem();
+        taskItem.MarkCompleted();
+
+        var secondMarkComplete = () => taskItem.MarkCompleted();
+        secondMarkComplete.Should().ThrowExactly<InvalidOperationException>()
+            .WithMessage("Task is already marked as complete");
+    }
+
+    [Fact]
+    public void Should_Throw_IsUnCompletedException_When_Task_Is_UnCompleted_Once()
+    {
+        var taskItem = new TaskItem();
+        taskItem.MarkCompleted(); 
+        taskItem.MarkUnCompleted();
+
+        var secondMarkUnComplete = () => taskItem.MarkUnCompleted();
+        secondMarkUnComplete.Should().ThrowExactly<InvalidOperationException>()
+            .WithMessage("Task is already marked as Uncompleted");
     }
 }
