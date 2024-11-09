@@ -1,6 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using TodoApp.Models;
-
 namespace TodoApp.Persistence;
 
 public class TodoListDbContext(DbContextOptions<TodoListDbContext> options) : DbContext(options)
