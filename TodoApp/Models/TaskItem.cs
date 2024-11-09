@@ -16,8 +16,7 @@ public class TaskItem : BaseClass
     public TaskItem(string title, DateTime? dueDate)
     {
         if (dueDate < DateTime.Now)
-            throw new OverdueTaskException("");
-
+            throw new OverdueTaskException("Cannot set a past due date.");
 
         if (string.IsNullOrEmpty(title))
             throw new ArgumentNullException();
@@ -29,7 +28,7 @@ public class TaskItem : BaseClass
     public void MarkCompleted()
     {
         if (IsCompleted)
-            throw new InvalidOperationException("Task is already marked as complete");
+            throw new InvalidOperationException("Task is already marked as complete.");
 
         IsCompleted = true;
     }
@@ -37,7 +36,7 @@ public class TaskItem : BaseClass
     public void MarkUnCompleted()
     {
         if (!IsCompleted)
-            throw new InvalidOperationException("Task is already marked as Uncompleted");
+            throw new InvalidOperationException("Task is already marked as Uncompleted.");
 
         IsCompleted = false;
     }
