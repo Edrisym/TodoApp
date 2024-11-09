@@ -4,7 +4,7 @@ namespace TodoApp.Models
 {
     public class TaskItem : BaseClass
     {
-        public string Title { get; set; }
+
         public string? Description { get; set; }
         public DateTime? DueDate { get; set; }
         public int Priority { get; set; }
@@ -12,8 +12,6 @@ namespace TodoApp.Models
 
         public TaskItem()
         {
-            Title = "Untitled Task";
-            IsCompleted = false;
         }
 
         public TaskItem(string title, DateTime? dueDate)
