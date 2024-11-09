@@ -9,7 +9,7 @@ namespace TodoApp.Tests
         [Fact]
         public void Should_Throw_ArgumentNullException_When_TodoList_Is_Created_With_Null_TaskItem()
         {
-            var todoListCreation = () => new TodoList(taskItem: null!);
+            var todoListCreation = () => new TodoList(taskItems: null!);
             todoListCreation.Should().ThrowExactly<ArgumentNullException>();
         }
 
