@@ -1,43 +1,45 @@
-namespace TodoApp.Models;
+using System;
 
-public class TaskItem : BaseClass
+namespace TodoApp.Models
 {
-    public string Title { get; set; }
-    public string Description { get; set; }
-    public DateTime? DueDate { get; set; }
-    public int Priority { get; set; }
-    public bool IsCompleted { get; set; }
-
-
-    public TaskItem()
+    public class TaskItem : BaseClass
     {
-    }
+        public string Title { get; set; }
+        public string? Description { get; set; }
+        public DateTime? DueDate { get; set; }
+        public int Priority { get; set; }
+        public bool IsCompleted { get; private set; }
 
-    public TaskItem(string title, DateTime? dueDate)
-    {
-        if (dueDate < DateTime.Now)
-            throw new OverdueTaskException("Cannot set a past due date.");
+        public TaskItem()
+        {
+            Title = "Untitled Task";
+            IsCompleted = false;
+        }
 
-        if (string.IsNullOrEmpty(title))
-            throw new ArgumentNullException();
+        public TaskItem(string title, DateTime? dueDate)
+        {
+            if (dueDate < DateTime.Now)
+                throw new OverdueTaskException("Cannot set a past due date.");
 
-        Title = title;
-        DueDate = dueDate;
-    }
+            Title = title ?? throw new ArgumentNullException(nameof(title), "Title cannot be null or empty.");
+            DueDate = dueDate;
+            IsCompleted = false;
+        }
 
-    public void MarkCompleted()
-    {
-        if (IsCompleted)
-            throw new InvalidOperationException("Task is already marked as complete.");
+        public void MarkCompleted()
+        {
+            if (IsCompleted)
+                throw new InvalidOperationException("Task is already marked as complete.");
 
-        IsCompleted = true;
-    }
+            IsCompleted = true;
+        }
 
-    public void MarkUnCompleted()
-    {
-        if (!IsCompleted)
-            throw new InvalidOperationException("Task is already marked as Uncompleted.");
+        public void MarkUnCompleted()
+        {
+            if (!IsCompleted)
+                throw new InvalidOperationException("Task is already marked as uncompleted.");
 
-        IsCompleted = false;
+            IsCompleted = false;
+        }
     }
 }
