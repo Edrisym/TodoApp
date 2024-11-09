@@ -1,53 +1,68 @@
-using System.Globalization;
-using Castle.Components.DictionaryAdapter.Xml;
+using TodoApp.Exceptions;
 
-namespace TodoApp.Tests;
-
-public class TodoListDomainTests
+namespace TodoApp.Tests
 {
-    [Fact]
-    public void Should_Throw_ArgumentNullException_When_TodoList_Is_Created_With_Null_TaskItem()
+    public class TodoListDomainTests
     {
-        var todoList = () => new TodoList(taskItem: null!);
-        todoList.Should().ThrowExactly<ArgumentNullException>();
-    }
+        #region CreationTests
 
-    [Fact]
-    public void Should_Throw_ArgumentNullException_When_TaskItem_Has_No_Title()
-    {
-        var taskItem = () => new TaskItem(title: null!, null);
+        [Fact]
+        public void Should_Throw_ArgumentNullException_When_TodoList_Is_Created_With_Null_TaskItem()
+        {
+            var todoListCreation = () => new TodoList(taskItem: null!);
+            todoListCreation.Should().ThrowExactly<ArgumentNullException>();
+        }
 
-        taskItem.Should().ThrowExactly<ArgumentNullException>();
-    }
+        [Fact]
+        public void Should_Throw_ArgumentNullException_When_TaskItem_Has_No_Title()
+        {
+            var taskItemCreation = () => new TaskItem(title: null!, DateTime.Now.AddDays(1));
 
-    [Theory]
-    [InlineData("Write Test")]
-    public void Should_Throw_OverdueTaskException_When_DueDate_Is_Over(string title)
-    {
-        var taskItem = new TaskItem(title, DateTime.Now.AddDays(1));
-        taskItem.DueDate.Should().NotBeBefore(DateTime.Now);
-    }
+            taskItemCreation.Should().ThrowExactly<ArgumentNullException>();
+        }
 
-    [Fact]
-    public void Should_Throw_IsCompletedException_When_Task_Is_Completed_Once()
-    {
-        var taskItem = new TaskItem();
-        taskItem.MarkCompleted();
+        #endregion
 
-        var secondMarkComplete = () => taskItem.MarkCompleted();
-        secondMarkComplete.Should().ThrowExactly<InvalidOperationException>()
-            .WithMessage("Task is already marked as complete");
-    }
+        #region DueDateValidationTests
 
-    [Fact]
-    public void Should_Throw_IsUnCompletedException_When_Task_Is_UnCompleted_Once()
-    {
-        var taskItem = new TaskItem();
-        taskItem.MarkCompleted(); 
-        taskItem.MarkUnCompleted();
+        [Theory]
+        [InlineData("Write Test")]
+        public void Should_Throw_OverdueTaskException_When_DueDate_Is_Past(string title)
+        {
+            var overdueDate = DateTime.Now.AddDays(-1);
+            var taskItemCreation = () => new TaskItem(title, overdueDate);
 
-        var secondMarkUnComplete = () => taskItem.MarkUnCompleted();
-        secondMarkUnComplete.Should().ThrowExactly<InvalidOperationException>()
-            .WithMessage("Task is already marked as Uncompleted");
+            taskItemCreation.Should().ThrowExactly<OverdueTaskException>()
+                .WithMessage("Cannot set a past due date.");
+        }
+
+        #endregion
+
+        #region CompletionStatusTests
+
+        [Fact]
+        public void Should_Throw_InvalidOperationException_When_Task_Is_Completed_Twice()
+        {
+            var taskItem = new TaskItem();
+            taskItem.MarkCompleted();
+
+            var secondMarkComplete = () => taskItem.MarkCompleted();
+            secondMarkComplete.Should().ThrowExactly<InvalidOperationException>()
+                .WithMessage("Task is already marked as complete.");
+        }
+
+        [Fact]
+        public void Should_Throw_InvalidOperationException_When_Task_Is_UnCompleted_Twice()
+        {
+            var taskItem = new TaskItem();
+            taskItem.MarkCompleted();
+            taskItem.MarkUnCompleted();
+
+            var secondMarkUnComplete = () => taskItem.MarkUnCompleted();
+            secondMarkUnComplete.Should().ThrowExactly<InvalidOperationException>()
+                .WithMessage("Task is already marked as uncompleted.");
+        }
+
+        #endregion
     }
 }
