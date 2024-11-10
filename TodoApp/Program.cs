@@ -1,7 +1,11 @@
+using TodoApp.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddToDoListDbContext();
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddScoped<TodoListRepository>();
 
 var app = builder.Build();
 
