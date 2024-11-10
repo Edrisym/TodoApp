@@ -2,6 +2,10 @@ namespace TodoApp.Models;
 
 public class TodoList : BaseClass
 {
+    public TodoList()
+    {
+    }
+
     private readonly List<TaskItem> _taskItems = new();
     public IReadOnlyList<TaskItem> TaskItems => _taskItems.AsReadOnly();
 
