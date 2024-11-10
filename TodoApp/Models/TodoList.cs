@@ -2,13 +2,17 @@ namespace TodoApp.Models;
 
 public class TodoList : BaseClass
 {
+    private List<TaskItem> _taskItems = new();
+
     public TodoList()
     {
     }
 
-    private readonly List<TaskItem> _taskItems = new();
-    public IReadOnlyList<TaskItem> TaskItems => _taskItems.AsReadOnly();
-
+    public IReadOnlyList<TaskItem> TaskItems
+    {
+        get => _taskItems.AsReadOnly();
+        init => _taskItems = (List<TaskItem>)value;
+    }
 
     public TodoList(IEnumerable<TaskItem> taskItems)
     {
@@ -18,5 +22,13 @@ public class TodoList : BaseClass
         }
 
         _taskItems.AddRange(taskItems);
+    }
+
+    public void AddTaskItem(TaskItem taskItem)
+    {
+        if (taskItem != null)
+        {
+            _taskItems.Add(taskItem);
+        }
     }
 }
