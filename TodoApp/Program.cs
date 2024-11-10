@@ -1,5 +1,3 @@
-using TodoApp.Persistence;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddToDoListDbContext();
@@ -8,7 +6,8 @@ builder.Services.AddEndpointsApiExplorer();
 var app = builder.Build();
 
 app.Run();
-
+app.MapEndpoints();
+app.UseRouting();
 
 public static class ServiceActivationExtensions
 {
