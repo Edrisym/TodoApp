@@ -5,9 +5,9 @@ builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-app.Run();
 app.MapEndpoints();
-app.UseRouting();
+app.Run();
+
 
 public static class ServiceActivationExtensions
 {
